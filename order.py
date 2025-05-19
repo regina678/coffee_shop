@@ -1,45 +1,43 @@
-# order.py
-from customer import Customer
-
 class Order:
+    all_orders = []
+
     def __init__(self, customer, coffee, price):
         self.customer = customer
         self.coffee = coffee
         self.price = price
+        Order.all_orders.append(self)
 
-    
-    def get_customer(self):
+    @property
+    def customer(self):
         return self._customer
 
-    def set_customer(self, value):
+    @customer.setter
+    def customer(self, value):
+        from customer import Customer
         if isinstance(value, Customer):
             self._customer = value
         else:
-            raise Exception("Customer must be an instance of the Customer class.")
+            raise Exception("customer must be a Customer instance.")
 
-    customer = property(get_customer, set_customer)
-
-    
-    def get_coffee(self):
+    @property
+    def coffee(self):
         return self._coffee
 
-    def set_coffee(self, value):
+    @coffee.setter
+    def coffee(self, value):
         from coffee import Coffee
         if isinstance(value, Coffee):
             self._coffee = value
         else:
-            raise Exception("Coffee must be an instance of the Coffee class.")
+            raise Exception("coffee must be a Coffee instance.")
 
-    coffee = property(get_coffee, set_coffee)
-
-    
-    def get_price(self):
+    @property
+    def price(self):
         return self._price
 
-    def set_price(self, value):
+    @price.setter
+    def price(self, value):
         if isinstance(value, float) and 1.0 <= value <= 10.0:
             self._price = value
         else:
-            raise Exception("Price must be a float between 1.0 and 10.0.")
-
-    price = property(get_price, set_price)
+            raise Exception("price must be a float between 1.0 and 10.0.")
